@@ -128,7 +128,7 @@ class MULTITOOL_MaintenanceSection_View extends MULTITOOL_View {
             <li>Trash limit with auto delete.</li>
             <li>Remind subscribers to complete their profiles.</li>
         </ol>';
-        $this->UI->intro_box( 'About Maintenance Section', 'Introduction to the Maintenance Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Maintenance Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Maintenance Section', 'Introduction to the Maintenance Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Maintenance Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'maintenancesectiondismiss' );
     }
          
     /**

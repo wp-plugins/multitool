@@ -163,7 +163,6 @@ class MULTITOOL_Main_View extends MULTITOOL_View {
         my work. Both supporting this plugin and creating more great plugins.", 'multitool' ) . '</p>';
     }       
 
-   
     /**
     * post box function for testing
     * 

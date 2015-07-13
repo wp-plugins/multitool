@@ -129,7 +129,7 @@ class MULTITOOL_CommentsSection_View extends MULTITOOL_View {
             <li>Automatically tweet a comment that sits withou reply for sometime.</li>
             <li>Basic antispam measures i.e. an increasing cooldown between comments.</li>
         </ol>';
-        $this->UI->intro_box( 'About Comments Section', 'Introduction to the Comments Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Comments Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Comments Section', 'Introduction to the Comments Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Comments Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'commentssectiondismiss' );
     }
          
     /**

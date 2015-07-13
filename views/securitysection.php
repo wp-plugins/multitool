@@ -127,7 +127,7 @@ class MULTITOOL_SecuritySection_View extends MULTITOOL_View {
             <li>Anti form hacking already built into this plugin for admin side. Can extend it for public side.</li>
             <li>Ability to intercept form submissions, prevent full submission and trigger a notification to the webmaster in the form of a request.</li>
         </ol>';
-        $this->UI->intro_box( 'About Security Section', 'Introduction to the Security Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Security Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Security Section', 'Introduction to the Security Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Security Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'securitysectiondismiss' );
     }
          
     /**

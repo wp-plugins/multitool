@@ -74,7 +74,7 @@ class MULTITOOL_Help {
     * 
     * @author Ryan Bayne
     * @package Multitool
-    * @since 0.0.1
+    * @since 0.0.2
     * @version 1.0
     */
     public function get_help_array() {   
@@ -83,30 +83,32 @@ class MULTITOOL_Help {
         // PAGE: main
         $h[ 'main' ][ 'pageinfo' ] = self::enterpage( __( 'Welcome', 'multitool' ), __( 'My name Ryan Bayne and I created this plugin. I can also help you at anytime. This help tab is not complete and will eventually offer help content for every feature.', 'multitool' ), MULTITOOL_PORTAL, MULTITOOL_YOUTUBEPLAYLIST );
 
-        // PAGE: generalsettings (EXAMPLE ONLY THIS PAGE DOES NOT EXIST)      
-        $h[ 'generalsettings' ][ 'pageinfo' ][ 'pagetitle' ]       = __( 'General Post Settings', 'multitool' ); 
-        $h[ 'generalsettings' ][ 'pageinfo' ][ 'pageabout' ]       = __( 'Beta Testing: These settings reflect what WordPress already has to offer. You will find these settings on the Edit Post screen and in most other .csv import plugins.', 'multitool' );    
-        $h[ 'generalsettings' ][ 'pageinfo' ][ 'pagereadmoreurl' ] = 'https://codex.wordpress.org/Post_Status';
-        $h[ 'generalsettings' ][ 'pageinfo' ][ 'pagevideourl' ]    = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
-        $h[ 'generalsettings' ][ 'pageinfo' ][ 'pagediscussurl' ]  = 'http://forum.webtechglobal.co.uk';
+        // PAGE TEST 1: postssection (manually typed)    
+        $h[ 'postssection' ][ 'pageinfo' ][ 'pagetitle' ]       = __( 'Test Page', 'multitool' ); 
+        $h[ 'postssection' ][ 'pageinfo' ][ 'pageabout' ]       = __( 'Beta Testing: These settings reflect what WordPress already has to offer. You will find these settings on the Edit Post screen and in most other .csv import plugins.', 'multitool' );    
+        $h[ 'postssection' ][ 'pageinfo' ][ 'pagereadmoreurl' ] = 'https://codex.wordpress.org/Post_Status';
+        $h[ 'postssection' ][ 'pageinfo' ][ 'pagevideourl' ]    = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
+        $h[ 'postssection' ][ 'pageinfo' ][ 'pagediscussurl' ]  = 'http://forum.webtechglobal.co.uk';
         //                                 FORM: basicpostoptions
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'formtitle' ]       = __( 'Basic Post Options' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'formabout' ]       = __( 'Beta Testing: These are the first and most commonly used options when creating posts in WordPress. The selections you make here will only apply to posts created by this plugin. If you want to read more about each setting you should use the WordPress.org codex.' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'formreadmoreurl' ] = 'https://codex.wordpress.org/Post_Status';
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'formvideourl' ]    = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'formdiscussurl' ]  = 'http://forum.webtechglobal.co.uk';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formtitle' ]       = __( 'Basic Post Options' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formabout' ]       = __( 'Beta Testing: These are the first and most commonly used options when creating posts in WordPress. The selections you make here will only apply to posts created by this plugin. If you want to read more about each setting you should use the WordPress.org codex.' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formreadmoreurl' ] = 'https://codex.wordpress.org/Post_Status';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formvideourl' ]    = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formvideoid' ]    = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'formdiscussurl' ]  = 'http://forum.webtechglobal.co.uk';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'helpurl' ]  = 'http://forum.webtechglobal.co.uk';
         //                                                        OPTION: poststatus
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'poststatus' ][ 'optiontitle' ]    = __( 'Post Status' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'poststatus' ][ 'optiontext' ]     = __( 'Beta Testing:A key ability within post status control is being able to hide content from the public until your ready to show it by changing a post to "publish" status. Each of the other status hide posts from visitors in different ways. I highly recommending reading the codex page.' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'poststatus' ][ 'optionurl' ]      = 'https://codex.wordpress.org/Post_Status';
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'poststatus' ][ 'optionvideourl' ] = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'poststatus' ][ 'optiontitle' ]    = __( 'Post Status' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'poststatus' ][ 'optiontext' ]     = __( 'Beta Testing:A key ability within post status control is being able to hide content from the public until your ready to show it by changing a post to "publish" status. Each of the other status hide posts from visitors in different ways. I highly recommending reading the codex page.' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'poststatus' ][ 'optionurl' ]      = 'https://codex.wordpress.org/Post_Status';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'poststatus' ][ 'optionvideourl' ] = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
         //                                                        OPTION: pingstatus
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'pingstatus' ][ 'optiontitle' ]    = __( 'Ping Status' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'pingstatus' ][ 'optiontext' ]     = __( 'Beta Testing: A key ability within post status control is being able to hide content from the public until your ready to show it by changing a post to "publish" status. Each of the other status hide posts from visitors in different ways. I highly recommending reading the codex page.' );
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'pingstatus' ][ 'optionurl' ]      = 'https://codex.wordpress.org/Post_Status';
-        $h[ 'generalsettings' ][ 'forms' ][ 'basicpostoptions' ][ 'options' ][ 'pingstatus' ][ 'optionvideourl' ] = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'pingstatus' ][ 'optiontitle' ]    = __( 'Ping Status' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'pingstatus' ][ 'optiontext' ]     = __( 'Beta Testing: A key ability within post status control is being able to hide content from the public until your ready to show it by changing a post to "publish" status. Each of the other status hide posts from visitors in different ways. I highly recommending reading the codex page.' );
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'pingstatus' ][ 'optionurl' ]      = 'https://codex.wordpress.org/Post_Status';
+        $h[ 'postssection' ][ 'forms' ][ 'iconstest' ][ 'options' ][ 'pingstatus' ][ 'optionvideourl' ] = 'http://www.youtube.com/2UQfk1PLj2s?t=2m';
         
-        // PAGES: betatest1
+        // PAGE TEST 2: used functions to add more arrays
         $h[ 'betatest1' ][ 'pageinfo' ] = self::enterpage( 'Testers', 'Beta Testing: About testers area about text intro text help text etc', 'www.webtechglobal.co.uk', 'www.youtube.com', 'discussurl' );
         // FORM: postbox_betatest1_t1
         $h[ 'betatest1' ][ 'forms' ][ 'postbox_betatest1_t1' ] = self::enterform( __( 'New Project & New CSV Files', 'multitool' ), __( 'Beta Testing: After uploading your .csv file/s using WordPress, FTP or another plugin. Enter the path/s into the form then submit. The plugin will do various checks to ensure your file/s can be used and end with creating one or more database tables.', 'multitool' ), false, false, false);

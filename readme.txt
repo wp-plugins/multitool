@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: Tool Kit, Tools Kit, Tools, Multi, Multitool
 Requires at least: 3.8.0
 Tested up to: 4.1.1
-Stable tag: 0.0.1
+Stable tag: 0.0.2
                         
 Multitool will eventually be packed with forms for WordPress administrators.
                         
@@ -63,6 +63,14 @@ No special upgrade instructions this time. Just remember to backup your site fil
 
 == Changelog == 
 
+= 0.0.2 =
+* Feature Changes
+    * View introductions can now be hidden.
+* Technical Notes                                                 
+    * Table markup is no longer added to a form even if it is not required.
+* Known Issues
+    * None
+    
 = 0.0.1 =
 * Beta released 17th March 2015
 

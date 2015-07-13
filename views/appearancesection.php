@@ -128,7 +128,7 @@ class MULTITOOL_AppearanceSection_View extends MULTITOOL_View {
             <li>Various widgets can be created.</li>
             <li>Custom menu management.</li>
         </ol>';
-        $this->UI->intro_box( 'About Appearance Section', 'Introduction to the Appearance Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Appearance Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Appearance Section', 'Introduction to the Appearance Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Appearance Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'appearancesectiondismiss' );
     }
          
     /**

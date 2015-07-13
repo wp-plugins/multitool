@@ -31,7 +31,7 @@ class MULTITOOL_PostsSection_View extends MULTITOOL_View {
         // array of meta boxes + used to register dashboard widgets (id, title, callback, context, priority, callback arguments (array), dashboard widget (boolean) )   
         return $this->meta_boxes_array = array(
             // array( id, title, callback (usually parent, approach created by Ryan Bayne), context (position), priority, call back arguments array, add to dashboard (boolean), required capability
-            //array( $this->view_name . '-importbranding', __( 'Import Branding', 'multitool' ), array( $this, 'parent' ), 'normal','default',array( 'formid' => 'importbranding' ), true, 'activate_plugins' ),
+            array( $this->view_name . '-iconstest', __( 'Icons Test', 'multitool' ), array( $this, 'parent' ), 'normal','default',array( 'formid' => 'iconstest' ), true, 'activate_plugins' ),
         );    
     }
             
@@ -131,7 +131,7 @@ class MULTITOOL_PostsSection_View extends MULTITOOL_View {
             <li>Shortcodes, as many as needed.</li>
             <li>Associate blog posts with forum posts based on titles plus user.</li>
         </ol>';
-        $this->UI->intro_box( 'About Posts Section', 'Introduction to the Posts Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Post Tools Ideas', 'multitool' ), $info_area_content, __( 'Please post new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Posts Section', 'Introduction to the Posts Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Post Tools Ideas', 'multitool' ), $info_area_content, __( 'Please post new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'postssectiondismiss' );
     }
          
     /**
@@ -142,9 +142,12 @@ class MULTITOOL_PostsSection_View extends MULTITOOL_View {
     * @since 0.0.1
     * @version 1.0
     */
-    public function postbox_postssection_importbranding( $data, $box ) {    
-        $this->UI->postbox_content_header( $box['title'], $box['args']['formid'], __( 'Import both project and in the verse branding to the media gallery i.e. corporation logos.', 'multitool' ), false );        
-        $this->Forms->form_start( $box['args']['formid'], $box['args']['formid'], $box['title'] );   
+    public function postbox_postssection_iconstest( $data, $box ) {    
+        $this->UI->postbox_content_header( $box['title'], $box['args']['formid'], __( 'Import both project and in the verse branding to the media gallery i.e. corporation logos.', 'multitool' ), true );        
+        $this->Forms->form_start( $box['args']['formid'], $box['args']['formid'], $box['title'] );  
+         
+        global $multitool_settings;
+
         $this->UI->postbox_content_footer( __( 'Import Now', 'multitool' ) );
     } 
 }?>

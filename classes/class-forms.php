@@ -53,8 +53,7 @@ class MULTITOOL_Formbuilder extends MULTITOOL_UI {
         // create class objects
         $this->UI = MULTITOOL::load_class( 'MULTITOOL_UI', 'class-ui.php', 'classes' );
         $this->PHP = MULTITOOL::load_class( 'MULTITOOL_PHP', 'class-phplibrary.php', 'classes' );
-        $this->WPCore = MULTITOOL::load_class( 'MULTITOOL_WPCore', 'class-wpcore.php', 'classes' );
-        
+
         // get form validation array
         $this->form_val_arr = get_option( 'multitool_formvalidation' );
         
@@ -1490,11 +1489,11 @@ class MULTITOOL_Formbuilder extends MULTITOOL_UI {
     * @author Ryan R. Bayne
     * @package Multitool
     * @since 0.0.1
-    * @version 1.0
+    * @version 1.1
     */
     public function input_menu_capabilities(){
         global $wp_roles; 
-        $capabilities_array = $this->WPCore->capabilities();
+        $capabilities_array = MULTITOOL::capabilities();
         
         // put into alphabetical order as it is a long list 
         ksort( $capabilities_array );

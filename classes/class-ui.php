@@ -19,7 +19,6 @@ class MULTITOOL_UI extends MULTITOOL {
         // load class used at all times
         $this->DB = self::load_class( 'MULTITOOL_DB', 'class-wpdb.php', 'classes' );
         $this->PHP = self::load_class( 'MULTITOOL_PHP', 'class-phplibrary.php', 'classes' );
-        $this->WPCore = self::load_class( 'MULTITOOL_WPCore', 'class-wpcore.php', 'classes' );  
     }  
           
     /**
@@ -207,11 +206,22 @@ class MULTITOOL_UI extends MULTITOOL {
     * @author Ryan R. Bayne
     * @package Multitool
     * @since 0.0.1
-    * @version 1.0
+    * @version 1.1
     */    
-    public function intro_box( $title, $intro, $info_area = false, $info_area_title = '', $info_area_content = '', $footer = false ){
+    public function intro_box( $title, $intro, $info_area = false, $info_area_title = '', $info_area_content = '', $footer = false, $dismissable_id = false ){
         global $multitool_settings;
         
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET[ $dismissable_id ]) && 'dismiss' == $_GET[ $dismissable_id ] ) {
+            add_user_meta($current_user->ID, $dismissable_id, 'true', true);
+            return;
+        }
+
+        // return before displaying anything if user already dismissed the intro
+        if ( get_user_meta( $current_user->ID, $dismissable_id ) ) {
+            return;
+        }
+                
         // highlighted area within the larger box
         $highlighted_info = '';
         if( $info_area == true && is_string( $info_area_title ) ) {
@@ -225,13 +235,20 @@ class MULTITOOL_UI extends MULTITOOL {
             $footer_text = '<p>' . $footer . '</p>';    
         }
         
+        // add dismiss button
+        $dismissable_button = '';
+        if( $dismissable_id ) {
+            $add_dismiss = sprintf( ' <a href="%s&%s=dismiss" class="button button-primary"> ' . __( 'Hide', 'multitool' ) . ' </a>', $_SERVER['REQUEST_URI'], $dismissable_id );
+        }
+                
         echo '
         <div class="multitool_status_box_container">
             <div class="welcome-panel">
-            
-                <h3>' . ucfirst( $title ) .'</h3>
-                
+          
                 <div class="welcome-panel-content">
+                    
+                    <h1>' . ucfirst( $title ) . $add_dismiss . '</h1>
+                    
                     <p class="about-description">' . ucfirst( $intro ) . '...</p>
  
                     ' . $highlighted_info . '
@@ -243,7 +260,7 @@ class MULTITOOL_UI extends MULTITOOL {
             </div> 
         </div>';  
     }  
-    
+  
     /**
     * Displays a mid grey area for pres
     * 
@@ -938,31 +955,64 @@ class MULTITOOL_UI extends MULTITOOL {
         
         global $c2p_page_name;
         
+        // count icons in use - may require limits and will need layout to adapt to many
+        $total_icons = 0;
+        
         // load help array
         $MULTITOOL_Help = MULTITOOL::load_class( 'MULTITOOL_Help', 'class-help.php', 'classes' );
                     
         $help_array = $MULTITOOL_Help->get_help_array();
 
-        $total_icons = 0; 
-
-        $page_name = MULTITOOL::get_admin_page_name();
-                
-        // display video icon with link to a YouTube video
-        if( isset( $help_array[ $page_name ][ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideoid' ] ) ){
-            self::panel_video_icon( $help_array[ $page_name ][ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideoid' ] );
+        //$page_name = MULTITOOL::get_admin_page_name(); // alternative approach
+                   
+        // display video icon with link to a YouTube video using ID only
+        if( isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideoid' ] ) ){
+            self::panel_video_icon( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideoid' ] );
             ++$total_icons;        
         } 
 
-        // do we have all required values to build help content and display form_information_icon()
-        if( isset( $help_array[ $page_name ][ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formtitle' ] )
-            && isset( $help_array[ $page_name ][ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formabout' ] ) ){  
-                           
-            // display the icon that will show information about the box when clicked
-            self::box_information_icon( $page_name, MULTITOOL_VIEWNAME, $form_id );
+        // display video icon with link to a YouTube video using full URL
+        if( isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideourl' ] ) ){
+            if( $total_icons > 0 ) {
+                //echo '<br>';
+            }
+            self::panel_video_icon( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formvideourl' ] );
+            ++$total_icons;        
         }
         
+        // do we have all required values to build help content and display form_information_icon()
+        if( isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formtitle' ] )
+            && isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formabout' ] ) ){  
+            if( $total_icons > 0 ) {
+                //echo '<br>';
+            }                           
+            // display the icon that will show information about the box when clicked
+            self::box_information_icon( MULTITOOL_VIEWNAME, $form_id );
+        }
+        
+        // display discussion icon
+        if( isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] ) ){
+            if( $total_icons > 0 ) {
+                //echo '<br>';
+            }
+            echo self::discussicon( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] );
+            ++$total_icons;        
+        }
+        
+        // display help icon - the URL can be used to instantly create a ticket with detailed filled out
+        if( isset( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'helpurl' ] ) ){
+            if( $total_icons > 0 ) {
+                //echo '<br>';
+            }
+            echo self::helpicon( $help_array[ MULTITOOL_VIEWNAME ][ 'forms' ][ $form_id ][ 'helpurl' ] );
+            ++$total_icons;        
+        }
+   
         // display a trash icon which allows box to be quickly hidden
         if( $trash_icon ){
+            if( $total_icons > 0 ) {
+                echo '<br>';
+            }            
             $this->panel_trash_icon( $form_id );
             ++$total_icons;
         }        
@@ -984,16 +1034,16 @@ class MULTITOOL_UI extends MULTITOOL {
     * 
     * @param mixed $url
     */
-    public function helpicon( $url){
+    public function helpicon( $url ){
         return '<a href="'.$url.'" title="'. __( 'View help for this on the plugins website.' ) .'" target="_blank"><img src="'. MULTITOOL_IMAGES_URL . 'help-icon.png" alt="'. __( 'View help for this on the plugins website' ) .'"></a>';
     }    
-    public function videoicon( $url){
+    public function videoicon( $url ){
         return '<a href="'.$url.'" title="'. __( 'View a video about this feature.' ) .'" target="_blank"><img src="'. MULTITOOL_IMAGES_URL . 'video-icon.png" alt="'. __( 'Video icon, click to open a video' ) .'"></a>';
     }     
-    public function trashicon( $url){
+    public function trashicon( $url ){
         return '<a href="'.$url.'" title="'. __( 'Delete or hide the current feature.' ) .'" target="_blank"><img src="'. MULTITOOL_IMAGES_URL . 'trash-icon.png" alt="'. __( 'Trash icon, click to delete or hide the current item' ) .'"></a>';
     }    
-    public function discussicon( $url){
+    public function discussicon( $url ){
         return '<a href="'.$url.'" title="'. __( 'Discuss this feature on the WebTechGlobal forum.' ) .'" target="_blank"><img src="'. MULTITOOL_IMAGES_URL . 'chat-icon.png" alt="'. __( 'Chat icon which you can click to discuss this feature on the WebTechGlobal forum.' ) .'"></a>';
     }  
     
@@ -1003,25 +1053,51 @@ class MULTITOOL_UI extends MULTITOOL {
     * @author Ryan Bayne
     * @package Multitool
     * @since 0.0.1
-    * @version 1.0
+    * @version 1.2
     */
-    public function postbox_content_header( $form_title, $form_id, $introduction = false, $trash_icon = false, $uploader = false ) {?>
+    public function postbox_content_header( $form_title, $form_id, $introduction = false, $allow_icons = false ) {?>
         <p>
+            
+            <?php 
+            $display_header = false;
+            
+            if( $allow_icons ) {
+                $display_header = true;
+            }
+            ?>
+            
+            <?php 
+            if( $display_header ) {
+            ?>
+            
             <!-- meta box icons start (a WTG thing, icons offer services) -->
             <table width="100%">
                 <tr>
-                    <td width="50%">
+                    <td width="75%" valign="top">
+                    
+                        <?php 
+                        if( $introduction !== false && !empty( $introduction) ){
+                            echo "<p class=\"multitool_boxes_introtext\">". $introduction ."</p>";
+                        }?>                    
                         
                     </td>
-                    <td width="50%" align="right">
-                        <?php self::metabox_icons( $form_id, $trash_icon );?>
+                    <td width="25%" align="right">
+                        <?php self::metabox_icons( $form_id );?>
                     </td>
                 </tr>
             </table>
             <!-- meta box icons end -->
             
-            <?php if( $introduction !== false && !empty( $introduction) ){echo "<p class=\"multitool_boxes_introtext\">". $introduction ."</p>";}?>
-            
+            <?php
+            } else {
+                
+                if( $introduction !== false && !empty( $introduction) ){
+                    echo "<p class=\"multitool_boxes_introtext\">". $introduction ."</p>";
+                }                
+                
+            }    
+            ?>
+ 
         <?php 
     }
     
@@ -1059,9 +1135,9 @@ class MULTITOOL_UI extends MULTITOOL {
     * @author Ryan Bayne
     * @package Multitool
     * @since 8.1.1
-    * @version 1.0
+    * @version 1.2
     */          
-    public function box_information_icon( $page_name, $view_name, $form_id ) {
+    public function box_information_icon( $view_name, $form_id ) {
         global $c2p_page_name;
         add_thickbox();
         
@@ -1073,48 +1149,48 @@ class MULTITOOL_UI extends MULTITOOL {
         $all_help_content = '<div id="infothickbox' . $form_id . '" style="display:none;">';   
         
         // the first content is like a short introduction to what the box/form is to be used for
-        $all_help_content .= '<p>' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formabout' ] . '</p>';
-
+        $all_help_content .= '<p>' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formabout' ] . '</p>';
+              
         // add a link encouraging user to visit site and read more OR visit YouTube video
-        if( isset( $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formreadmoreurl' ] ) ){
+        if( isset( $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formreadmoreurl' ] ) ){
             $all_help_content .= '<p>';
             $all_help_content .= __( 'You are welcome to visit the', 'multitool' ) . ' ';
-            $all_help_content .= '<a href="' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formreadmoreurl' ] . '"';
-            $all_help_content .= 'title="' . __( 'Visit the Multitool website and read more about', 'multitool' ) . ' ' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"';
+            $all_help_content .= '<a href="' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formreadmoreurl' ] . '"';
+            $all_help_content .= 'title="' . __( 'Visit the Multitool website and read more about', 'multitool' ) . ' ' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"';
             $all_help_content .= 'target="_blank"';
             $all_help_content .= '>';
-            $all_help_content .= __( 'Multitool Website', 'multitool' ) . '</a> ' . __( 'to read more about', 'multitool' ) . ' ' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ];           
+            $all_help_content .= __( 'Multitool Website', 'multitool' ) . '</a> ' . __( 'to read more about', 'multitool' ) . ' ' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ];           
             $all_help_content .= '.</p>';
         }  
         
         // add a link to a Youtube
-        if( isset( $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formvideourl' ] ) ){
+        if( isset( $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formvideourl' ] ) ){
             $all_help_content .= '<p>';
             $all_help_content .= __( 'There is a', 'multitool' ) . ' ';
-            $all_help_content .= '<a href="' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formvideourl' ] . '"';
+            $all_help_content .= '<a href="' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formvideourl' ] . '"';
             $all_help_content .= 'title="' . __( 'Go to YouTube and watch a video about', 'multitool' ) . ' ' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"';
             $all_help_content .= 'target="_blank"';
             $all_help_content .= '>';            
             $all_help_content .= __( 'YouTube Video', 'multitool' ) . '</a> ' . __( 'about', 'multitool' ) . ' ' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ];           
             $all_help_content .= '.</p>';
         }
-
+ 
         // add a link to a Youtube
-        if( isset( $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] ) ){
+        if( isset( $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] ) ){
             $all_help_content .= '<p>';
             $all_help_content .= __( 'We invite you to take discuss', 'multitool' ) . ' ';
-            $all_help_content .= '<a href="' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] . '"';
-            $all_help_content .= 'title="' . __( 'Visit the WebTechGlobal forum to discuss', 'multitool' ) . ' ' . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"';
+            $all_help_content .= '<a href="' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formdiscussurl' ] . '"';
+            $all_help_content .= 'title="' . __( 'Visit the WebTechGlobal forum to discuss', 'multitool' ) . ' ' . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"';
             $all_help_content .= 'target="_blank"';
             $all_help_content .= '>';            
-            $all_help_content .= $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '</a> ' . __( 'on the WebTechGlobal Forum', 'multitool' );           
+            $all_help_content .= $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '</a> ' . __( 'on the WebTechGlobal Forum', 'multitool' );           
             $all_help_content .= '.</p>';
         }        
-        
+       
         // list information for each option 
-        if( isset( $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'options' ] ) ){
-            foreach( $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'options' ] as $option_id => $option_array ){
-                
+        if( isset( $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'options' ] ) ){  
+            foreach( $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'options' ] as $option_id => $option_array ){
+               
                 // start paragraph for the option
                 $all_help_content .= '<h3>' . $option_array['optiontitle'] . '</h3>';
                 $all_help_content .= '<p>';
@@ -1144,9 +1220,9 @@ class MULTITOOL_UI extends MULTITOOL {
         
         // build linked image
         $all_help_content .= '<a href="#TB_inline?width=600&height=550&inlineId=infothickbox' . $form_id . '" class="thickbox" title="';
-        $all_help_content .= __( 'Help for ', 'multitool' ) . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '">';
+        $all_help_content .= __( 'Help for ', 'multitool' ) . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '">';
         $all_help_content .= '<img src="' . MULTITOOL_IMAGES_URL . 'info-icon.gif" alt="';
-        $all_help_content .= __( 'Click icon to view help for ', 'multitool' ) . $help_array[ $page_name ][ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"></a>';
+        $all_help_content .= __( 'Click icon to view help for ', 'multitool' ) . $help_array[ $view_name ][ 'forms' ][ $form_id ][ 'formtitle' ] . '"></a>';
       
         echo $all_help_content;
     }
@@ -1336,7 +1412,38 @@ class MULTITOOL_UI extends MULTITOOL {
     public function adminonly() {
         $this->create_notice( 'You do not have permission to complete that action.', 'warning', 'Small', 'No Permission' );
     }
-    
+
+    /**
+    * Create an admin notice that requires user to dismiss.
+    * 
+    * @author Ryan R. Bayne
+    * @package Multitool
+    * @since 0.0.1
+    * @version 1.0                           
+    */
+    public function sticky_notice( $notice_name, $message, $type = 'info', $size = 'Small', $title = false, $sensitive = false, $helpurl = false ) {
+        global $current_user ;
+
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET[ $notice_name ]) && 'dismiss' == $_GET[ $notice_name ] ) {
+            
+            add_user_meta($current_user->ID, $notice_name, 'true', true);
+            
+            /* Gets where the user came from after they click Hide Notice */
+            if ( wp_get_referer() ) {
+                /* Redirects user to where they were before */
+                wp_safe_redirect( wp_get_referer() );
+            } else {
+                /* This will never happen, I can almost gurantee it, but we should still have it just in case*/
+                wp_safe_redirect( home_url() );
+            }
+        }
+
+        if ( !get_user_meta( $current_user->ID, $notice_name ) ) {
+            self::create_notice( $message . sprintf( ' <a href="%s&%s=dismiss"> Dismiss </a>', $_SERVER['REQUEST_URI'], $notice_name), $type, $size, $title, $sensitive, $helpurl );
+        }               
+    }
+        
     /**
     * 
     */
@@ -1360,6 +1467,64 @@ class MULTITOOL_UI extends MULTITOOL {
     */
     public function create_message() {
         ## $multitool_notice_array['messages'][$owner][$key]['message'] = $message;    
+    }
+
+    /**
+    * Notice template with 3 columns, list, dismiss button etc.
+    * 
+    * Copy this function do not edit it.
+    * 
+    * @author Ryan R. Bayne
+    * @package CSV 2 POST
+    * @since 0.0.1
+    * @version 1.0
+    */
+    public function notice_template_3columns() { ?>
+            <div class="updated">
+            
+                <table>
+                    <tr valign="top">
+                        <td style="width: 33%;">
+                            <h3>Two Lists:</h3>
+                            <h4>Smaller Title</h4>
+                            <ol>
+                                <li>An Item</li>
+                            </ol>
+                            <h4>Smaller Title</h4>
+                            <ol>
+                                <li>An Item </li>
+                                <li>An Item</li>
+                            </ol>
+                        </td>
+                        <td style="width: 43%; ">
+                            <h3>Subscribe and Promote</h3>
+                            <ol>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Promotion Link</a></li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Subscribe Link</a></li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Coupon Link</li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Donation Link</li>
+                            </ol>
+                            <a class='button-primary' target='_blank' href='http://www.webtechglobal.co.uk'>Subscribe to support this project »</a>
+                        </td>
+                        <td>
+                            <h3>Latest Subscriber Websites</h3>
+                            <ol>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Users Link</li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Users Link</li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Users Link</li>
+                                <li><a href='https://www.webtechglobal.co.uk' target='_blank'>Users Link</li>
+                            </ol>
+                            
+                            <a class="button" href="<?php echo $_SERVER['REQUEST_URI']; ?>&unique_dismiss_id=true"><?php _e( 'Dismiss', 'csv2post' ); ?></a>
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            </div>
+            
+            <link rel="canonical" href="http://www.theportlandcompany.com/product/custom-pointers-plugin-for-wordpress/">
+        <?php                
     }
     
     public function display_all() {
@@ -1846,7 +2011,7 @@ class MULTITOOL_UI extends MULTITOOL {
 
         // create array of capabilities without roles
         global $wp_roles; 
-        $capabilities_array = $this->WPCore->capabilities();
+        $capabilities_array = MULTITOOL::capabilities();
         
         // put into alphabetical order as it is a long list 
         ksort( $capabilities_array );

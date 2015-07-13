@@ -127,7 +127,7 @@ class MULTITOOL_CurationSection_View extends MULTITOOL_View {
             <li>Scraping profiles for popular websites.</li>
             <li>Examples of common API.</li>
         </ol>';
-        $this->UI->intro_box( 'About Curation Section', 'Introduction to the Curation Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Curation Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Curation Section', 'Introduction to the Curation Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Curation Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'curationsectiondismiss' );
     }
          
     /**

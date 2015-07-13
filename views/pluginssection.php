@@ -128,7 +128,7 @@ class MULTITOOL_PluginsSection_View extends MULTITOOL_View {
             <li>Store plugin update, activation and deactivation history.</li>
             <li>Page that shows video tutorials for your installed plugins.</li>
         </ol>';
-        $this->UI->intro_box( 'About Plugins Section', 'Introduction to the Plugins Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Plugin Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Plugins Section', 'Introduction to the Plugins Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Plugin Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'pluginssectiondismiss' );
     }
          
     /**

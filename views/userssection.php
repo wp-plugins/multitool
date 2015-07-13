@@ -128,7 +128,7 @@ class MULTITOOL_UsersSection_View extends MULTITOOL_View {
             <li>List the most active members, even taking phpBB forum activity into account.</li>
             <li>Automatically gather data from the web based on usernames and email address.</li>
         </ol>';
-        $this->UI->intro_box( 'About Users Section', 'Introduction to the Users Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Users Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Users Section', 'Introduction to the Users Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Users Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'userssectiondismiss' );
     }
          
     /**

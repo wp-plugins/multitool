@@ -2048,9 +2048,11 @@ class MULTITOOL {
                 $h2_title = 'Multitool: ' . $pagetitle;    
             }
 
-            // if update screen set this title
-            if( $_GET['page'] == 'multitool_pluginupdate' ){
-                $h2_title = __( 'New Multitool Update Ready', 'multitool' );
+            // if build only has one page, shorten the title
+            // this is to make plugin building a little quicker
+            $pages = count( $multitool_menu_array );
+            if( $pages == 1 ){
+                $h2_title = 'YouTube Sidebar';
             }           
             ?>
             
@@ -2226,7 +2228,7 @@ class MULTITOOL {
     }
     
     /**
-    * Builds text link, also validates it to ensure it still exists else reports it as broken
+    * Builds text link, also validates it to ensure it still exists.
     * 
     * The idea of this function is to ensure links used throughout the plugins interface
     * are not broken. Over time links may no longer point to a page that exists, we want to 
@@ -2240,6 +2242,8 @@ class MULTITOOL {
     * @param string $target, _blank _self etc
     * @param string $class, css class name (common: button)
     * @param strong $response [echo][return]
+    * 
+    * @todo add functionality to report invalid URL in use
     */
     public function link( $text, $url, $htmlentities = '', $target = '_blank', $class = '', $response = 'echo', $title = '' ){
         // add ? to $middle if there is no proper join after the domain
@@ -2249,12 +2253,12 @@ class MULTITOOL {
         if( $class != '' ){$class = 'class="'.$class.'"';}
         
         // build final url
-        $finalurl = $url.$middle.htmlentities( $htmlentities);
+        $finalurl = $url.$middle.htmlentities( $htmlentities );
         
         // check the final result is valid else use a default fault page
-        $valid_result = self::validate_url( $finalurl);
+        $valid_result = self::validate_url( $finalurl );
         
-        if( $valid_result){
+        if( $valid_result ){
             $link = '<a href="'.$finalurl.'" '.$class.' target="'.$target.'" title="'.$title.'">'.$text.'</a>';
         }else{
             $linktext = __( 'Invalid Link, Click To Report' );
@@ -2830,7 +2834,24 @@ class MULTITOOL {
         $exloded = explode( '_', $_GET['page'] );
         return end( $exloded );        
     }
-               
+
+    /**
+    * Get all capabilities in array.
+    * 
+    * @author Ryan R. Bayne
+    * @package Multitool
+    * @since 0.0.1
+    * @version 1.0
+    */
+    public function capabilities() {
+        global $wp_roles; 
+        $capabilities_array = array();
+        foreach( $wp_roles->roles as $role => $role_array ) { 
+            $capabilities_array = array_merge( $capabilities_array, $role_array['capabilities'] );    
+        }
+        return $capabilities_array;
+    }
+                   
 }// end MULTITOOL class 
 
 if(!class_exists( 'WP_List_Table' ) ){

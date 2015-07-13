@@ -129,7 +129,7 @@ class MULTITOOL_Pagessection_View extends MULTITOOL_View {
             <li>An overview of all pages SEO status - like a health meter.</li>
             <li>Display pages that are not in any menu.</li>
         </ol>';
-        $this->UI->intro_box( 'About Pages Section', 'Introduction to the Pages Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Pages Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Pages Section', 'Introduction to the Pages Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Pages Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'pagessectiondismiss' );
     }
          
     /**

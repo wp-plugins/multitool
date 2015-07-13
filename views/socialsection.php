@@ -129,7 +129,7 @@ class MULTITOOL_SocialSection_View extends MULTITOOL_View {
             <li>Manage phpBB personal messages in WP admin.</li>
             <li>Share media to social networks from media manager.</li>
         </ol>';
-        $this->UI->intro_box( 'About Social Section', 'Introduction to the Social Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Social Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Social Section', 'Introduction to the Social Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Social Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'socialsectiondismiss' );
     }
          
     /**

@@ -33,7 +33,6 @@ class MULTITOOL_Requests {
         $this->PHP = $this->MULTITOOL->load_class( 'MULTITOOL_PHP', 'class-phplibrary.php', 'classes' ); # php library by Ryan R. Bayne
         $this->Files = $this->MULTITOOL->load_class( 'MULTITOOL_Files', 'class-files.php', 'classes' );
         $this->Forms = $this->MULTITOOL->load_class( 'MULTITOOL_Formbuilder', 'class-forms.php', 'classes' );
-        $this->WPCore = $this->MULTITOOL->load_class( 'MULTITOOL_WPCore', 'class-wpcore.php', 'classes' );
         $this->TabMenu = $this->MULTITOOL->load_class( "MULTITOOL_TabMenu", "class-pluginmenu.php", 'classes','pluginmenu' );    
     }
     
@@ -396,12 +395,12 @@ class MULTITOOL_Requests {
     * @author Ryan R. Bayne
     * @package Multitool
     * @since 0.0.1
-    * @version 1.0
+    * @version 1.1 
     */
     public function pagecapabilitysettings() {
         
         // get the capabilities array from WP core
-        $capabilities_array = $this->WPCore->capabilities();
+        $capabilities_array = $this->MULTITOOL->capabilities();
 
         // get stored capability settings 
         $saved_capability_array = get_option( 'multitool_capabilities' );

@@ -129,7 +129,7 @@ class MULTITOOL_SchedulingSection_View extends MULTITOOL_View {
             <li>Schedule hidden content on a page to display i.e. winner of a competition, discount code.</li>
             <li>Schedule deletion of a specific record in the database.</li>
         </ol>';
-        $this->UI->intro_box( 'About Scheduling Section', 'This introduction to the Scheduling Section should help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Scheduling Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Scheduling Section', 'This introduction to the Scheduling Section should help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Scheduling Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'schedulingsectiondismiss' );
     }
          
     /**

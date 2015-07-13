@@ -131,7 +131,7 @@ class MULTITOOL_MediaSection_View extends MULTITOOL_View {
             <li>Allow community to replace YouTube URLs i.e. if video deleted or a better exists.</li>
             <li>Tools for managing source, author and copyright of media.</li>
         </ol>';
-        $this->UI->intro_box( 'About Media Section', 'Introduction to the Media Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Media Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Media Section', 'Introduction to the Media Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Media Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'mediasectiondismiss' );
     }
          
     /**

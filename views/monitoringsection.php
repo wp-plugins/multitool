@@ -130,7 +130,7 @@ class MULTITOOL_MonitoringSection_View extends MULTITOOL_View {
             <li>Get notifications when administrators login.</li>
             <li>Get an emai summary of activity including data and file changes.</li>
         </ol>';
-        $this->UI->intro_box( 'About Monitoring Section', 'Introduction to the Monitoring Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Monitoring Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ) );
+        $this->UI->intro_box( 'About Monitoring Section', 'Introduction to the Monitoring Section to help you understand what tools should be added to this section (by the community) and what sort of tools you can request for this section.', true, __( 'Monitoring Tools Ideas', 'multitool' ), $info_area_content, __( 'Please submit new tool ideas/requests in the WebTechGlobal forum.', 'multitool' ), 'monitoringsectiondismiss' );
     }
          
     /**

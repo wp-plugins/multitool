@@ -1,12 +1,12 @@
 <?php         
 /*
 Plugin Name: Multitool Beta
-Version: 0.0.1
+Version: 0.0.2
 Plugin URI: http://www.webtechglobal.co.uk/wtg-plugin-framework-wordpress/
 Description: Multitool does a little bit of everything.
 Author: WebTechGlobal
 Author URI: http://www.webtechglobal.co.uk/
-Last Updated: June 2015
+Last Updated: July 2015
 Text Domain: multitool
 Domain Path: /languages
 
@@ -38,11 +38,11 @@ if ( ( 'wp-login.php' === basename( $_SERVER['SCRIPT_FILENAME'] ) ) // Login scr
 }
               
 // package variables
-$multitool_currentversion = '0.0.1';# to be removed, version is now in the MULTITOOL() class 
+$multitool_currentversion = '0.0.2';# to be removed, version is now in the MULTITOOL() class 
 $multitool_debug_mode = false;# to be phased out, going to use environment variables (both WP and php.ini instead)
 
 // go into dev mode if on test installation (if directory contains the string you will see errors and other fun stuff for geeks)               
-if( strstr( ABSPATH, 'OFFmultitool' ) ){
+if( strstr( ABSPATH, 'multitool' ) ){
     $multitool_debug_mode = true;     
 }               
 

@@ -1,6 +1,6 @@
 <?php
 /** 
- * Categories for WordPress
+ * Categories for WordPress - class for use in WebTechGlobal plugins.
  * 
  * Create, modify and search categories in ways that plugins can use 
  * 
